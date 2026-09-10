@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f4c542">
+  <title>Un Detallito Amarillo 🌻</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="petals" class="petals" aria-hidden="true"></div>
+
+  <header class="hero capa activa" id="inicio">
+    <div class="hero-garden" id="heroGarden" aria-hidden="true"></div>
+    <div class="hero-content">
+      <p class="eyebrow">Un pequeño detalle</p>
+      <h1>Tengo algo<br><span>para ti...</span></h1>
+      <p class="hero-subtitle">Flores, recuerdos y un poquito de cariño. 💛</p>
+      <button class="primary-btn" id="discoverBtn">Descubrir <span>🌻</span></button>
+    </div>
+  </header>
+
+  <main>
+<section class="bouquets section capa" id="ramos">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Parte I</p>
+        <h2>Ramitos de fotitos</h2>
+        <p>PRESIONE LAS FOTOS SEÑORITA💜 .</p>
+      </div>
+      <div class="bouquet-grid" id="bouquetGrid"></div>
+      <div class="nav-buttons"><button class="secondary-btn nav-btn" data-go="inicio">← Volver</button><button class="primary-btn nav-btn" data-go="momentos">Avanzar →</button></div>
+    </section>
+
+    <section class="moments section capa" id="momentos">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Parte II</p>
+        <h2>Guabitos!!✨✨</h2>
+        <p>✨✨ 💛</p>
+      </div>
+
+      <div class="music-gate" id="musicGate">
+        <p class="music-gate-title">Toca el botoncito 🎵</p>
+        <p class="music-gate-subtitle">✨✨✨</p>
+        <button class="music-float-btn gate-music-btn" id="musicBtn" aria-label="Reproducir música" title="Reproducir música">🎵</button>
+      </div>
+
+      <audio id="audio" src="musica/mi-vida-entera.mp3" preload="auto"></audio>
+
+      <div class="memory-player reveal">
+        <div class="memory-frame">
+          <div class="memory-flower flower-left" aria-hidden="true"></div>
+          <div class="memory-flower flower-right" aria-hidden="true"></div>
+          <div class="memory-photo-wrap">
+            <img id="currentPhoto" src="fotos/foto1.jpg" alt="Recuerdo" loading="eager">
+            <div id="photoFallback" class="photo-fallback">
+              <span>📸</span>
+              <strong>Tu foto aparecerá aquí</strong>
+              <small>Guarda una imagen como <b>foto1.jpg</b> dentro de la carpeta fotos.</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="memory-controls">
+          <button class="icon-btn" id="prevBtn" aria-label="Foto anterior">←</button>
+          <div class="progress-dots" id="progressDots"></div>
+          <button class="icon-btn" id="nextBtn" aria-label="Siguiente foto">→</button>
+        </div>
+        <button class="secondary-btn" id="playSlideshow">▶ Ver recuerdos</button>
+      </div>
+      <div class="nav-buttons"><button class="secondary-btn nav-btn" data-go="ramos">← Volver</button><button class="primary-btn nav-btn" data-go="finale">Avanzar →</button></div>
+    </section>
+
+    <section class="finale capa" id="finale">
+      <div class="final-garden" id="finalGarden" aria-hidden="true"></div>
+      <div class="final-content reveal">
+        <p class="eyebrow">Y al final...</p>
+        <h2>Si las flores amarillas significan alegría, quería regalarte un poquito de la mía. 🌻</h2>
+        <p>Gracias por formar parte de mis recuerdos.</p>
+        <button class="primary-btn" id="againBtn">Volver al inicio ↑</button>
+      </div>
+      <div class="nav-buttons"><button class="secondary-btn nav-btn" data-go="momentos">← Volver</button></div>
+    </section>
+  </main>
+
+  <div class="modal" id="photoModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close="true"></div>
+    <div class="modal-card">
+      <div class="tap-hint">Toca la foto 💛</div>
+      <button class="modal-close" id="closeModal" aria-label="Cerrar">×</button>
+      <div class="photo-flip" id="photoFlip">
+        <div class="photo-flip-inner">
+          <div class="photo-flip-front">
+            <img id="modalImage" src="" alt="Fotografía ampliada">
+          </div>
+          <div class="photo-flip-back" id="modalMessage">
+            <span>🌻</span>
+            <p></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
