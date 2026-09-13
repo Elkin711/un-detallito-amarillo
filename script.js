@@ -11,7 +11,10 @@ const photoNames = [
   "Spider foto🕸️", "Fotito con la BIBLIA🙌", "Fotito match", "Y si bailamos??",
   "Fotito en el altar🙌", "Primera Fotito", "Otro recuerdo bonito", "Un día especial juntos",
   "Un recuerdo que quiero guardar", "Momentos que valen", "Un pedacito de nosotros", "Para recordar siempre",
-  "Una noche para recordar", "Un momento que se queda", "Entre sonrisas y recuerdos", "Otro pedacito de nosotros"
+  "Una noche para recordar", "Un momento que se queda", "Entre sonrisas y recuerdos", "Otro pedacito de nosotros",
+  "Un recuerdo juntos 💛", "Una tarde para guardar 🌻", "Una foto que me encanta ✨", "Otro momento nuestro 💕",
+  "Sonrisas que quiero recordar 💛", "Un instante especial 🌻", "Juntos se siente bonito ✨", "Otro pedacito de nosotros 💕",
+  "Un recuerdo más para el corazón 💛", "Siempre nosotros 🌻"
 ];
 
 const flowerSvg = {
@@ -133,7 +136,27 @@ const photos = [
   "fotos/foto15.jpg",
   "fotos/foto16.jpg",
   "fotos/foto17.jpg",
-  "fotos/foto18.jpg"
+  "fotos/foto18.jpg",
+  "fotos/foto19.jpg",
+  "fotos/foto20.jpg",
+  "fotos/foto21.jpg",
+  "fotos/foto22.jpg",
+  "fotos/foto23.jpg",
+  "fotos/foto24.jpg",
+  "fotos/foto25.jpg",
+  "fotos/foto26.jpg",
+  "fotos/foto27.jpg",
+  "fotos/foto28.jpg",
+  "fotos/capa3_01.jpg",
+  "fotos/capa3_02.jpg",
+  "fotos/capa3_03.jpg",
+  "fotos/capa3_04.jpg",
+  "fotos/capa3_05.jpg",
+  "fotos/capa3_06.jpg",
+  "fotos/capa3_07.jpg",
+  "fotos/capa3_08.jpg",
+  "fotos/capa3_09.jpg",
+  "fotos/capa3_10.jpg"
 ];
 let current=0, slideshowTimer=null;
 
@@ -200,6 +223,9 @@ function setupMusic(){
   const audio=document.getElementById("audio"), btn=document.getElementById("musicBtn"), seek=document.getElementById("seek"), label=document.getElementById("timeLabel"), player=document.querySelector(".audio-player");
   if(!audio || !btn) return;
 
+  // Música de la Capa 3: usa la canción original mi-vida-entera.mp3.
+  audio.loop = true;
+
   if(seek){
     audio.addEventListener("loadedmetadata",()=>seek.max=audio.duration||100);
     audio.addEventListener("timeupdate",()=>{
@@ -226,8 +252,9 @@ function setupMusic(){
     if(player) player.classList.remove("audio-playing");
   });
   audio.addEventListener("ended",()=>{
-    btn.textContent="🎵";
-    btn.classList.remove("playing");
+    // Respaldo para navegadores móviles: vuelve a iniciar la canción al terminar.
+    audio.currentTime = 0;
+    audio.play().catch(()=>{});
   });
   audio.addEventListener("error",()=>{btn.textContent="🎵";btn.classList.remove("playing")});
 
@@ -261,10 +288,15 @@ function mostrarCapa(id){
   const audio=document.getElementById("audio");
   const gate=document.getElementById("musicGate");
 
-  // La música pertenece únicamente a Capa 3. Al salir, se detiene y vuelve al inicio.
-  if(id!=="momentos" && audio){
+  // La música ambiental suena en Capas 1, 2 y 4. Capa 3 usa su propia canción.
+  if(audio){
     audio.pause();
     audio.currentTime=0;
+  }
+  if(id==="momentos"){
+    detenerMusicaAmbiental();
+  }else{
+    iniciarMusicaAmbiental();
   }
 
   document.querySelectorAll(".capa").forEach(c=>c.classList.remove("activa"));
@@ -277,6 +309,42 @@ function mostrarCapa(id){
   if(id==="momentos" && gate){
     gate.classList.remove("hidden");
   }
+}
+
+
+// Música ambiente para Capas 1, 2 y 4
+const audioAmbient = new Audio("musica/flores-amarillas.mp3");
+audioAmbient.loop = true;
+audioAmbient.preload = "auto";
+audioAmbient.addEventListener("ended", () => {
+  if(document.getElementById("momentos")?.classList.contains("activa")) return;
+  audioAmbient.currentTime = 0;
+  audioAmbient.play().catch(()=>{});
+});
+
+// En celulares el navegador puede bloquear el autoplay.
+// Usamos la primera interacción real del usuario para arrancar la música
+// de las Capas 1, 2 y 4. Se mantiene activo para que también funcione
+// al volver a entrar a cualquiera de esas capas.
+function activarMusicaConInteraccion(){
+  const momentos = document.getElementById("momentos");
+  if(!momentos || !momentos.classList.contains("activa")){
+    iniciarMusicaAmbiental();
+  }
+}
+document.addEventListener("pointerdown", activarMusicaConInteraccion);
+document.addEventListener("touchstart", activarMusicaConInteraccion, {passive:true});
+document.addEventListener("keydown", activarMusicaConInteraccion);
+
+
+function iniciarMusicaAmbiental(){
+  if(audioAmbient.paused){
+    audioAmbient.play().catch(()=>{});
+  }
+}
+function detenerMusicaAmbiental(){
+  audioAmbient.pause();
+  audioAmbient.currentTime = 0;
 }
 
 document.addEventListener("DOMContentLoaded",()=>{
