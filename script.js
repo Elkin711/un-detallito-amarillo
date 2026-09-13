@@ -183,7 +183,14 @@ function showPhoto(index, animate=true){
 
 function updateDots(){
   const d=document.getElementById("progressDots");
-  d.innerHTML=photos.map((_,i)=>`<span class="dot ${i===current?"active":""}"></span>`).join("");
+  if(!d) return;
+  // En celular mostramos solo 3 puntitos, sin importar cuántas fotos haya.
+  // Cada puntito representa un tercio del recorrido de recuerdos.
+  const totalDots=3;
+  const activeIndex=Math.min(totalDots-1, Math.floor((current / photos.length) * totalDots));
+  d.innerHTML=Array.from({length:totalDots},(_,i)=>
+    `<span class="dot ${i===activeIndex?"active":""}" aria-hidden="true"></span>`
+  ).join("");
 }
 function toggleSlideshow(){
   const btn=document.getElementById("playSlideshow");
