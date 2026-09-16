@@ -183,14 +183,7 @@ function showPhoto(index, animate=true){
 
 function updateDots(){
   const d=document.getElementById("progressDots");
-  if(!d) return;
-  // En celular mostramos solo 3 puntitos, sin importar cuántas fotos haya.
-  // Cada puntito representa un tercio del recorrido de recuerdos.
-  const totalDots=3;
-  const activeIndex=Math.min(totalDots-1, Math.floor((current / photos.length) * totalDots));
-  d.innerHTML=Array.from({length:totalDots},(_,i)=>
-    `<span class="dot ${i===activeIndex?"active":""}" aria-hidden="true"></span>`
-  ).join("");
+  d.innerHTML=photos.map((_,i)=>`<span class="dot ${i===current?"active":""}"></span>`).join("");
 }
 function toggleSlideshow(){
   const btn=document.getElementById("playSlideshow");
@@ -205,10 +198,10 @@ function toggleSlideshow(){
 const photoMessages = [
   "Qué bonito es guardar momentos que, con solo mirarlos, vuelven a hacerme sonreír. 💛",
   " QUE BELLA✨ !! que estabas este día me encanta como te ves con vestidos . 🌻",
-  "Guabitos este día combinados.\ Estaba nervioso porque te queria decir que me gustabas😣 . ✨",
+  "Guabitos este día combinados.\ Me encanta cada momento que paso junto a ti💖 . ✨",
   "Y si bailamos??\ Me encantó el video que hiciste💖. 💛",
-  "Nos apagaron la luz😔 JAJA pero, tu eras el brillo que necesitaba la fotoocs✨✨ 🌻",
-  "Re nervioso estaba este día y tu tan LINDA como todos los días💖✨\ . 🌻💛"
+  "Nos apagaron la luz😔 JAJA, pero tu eras el brillo que necesitaba la fotoocs✨✨ 🌻",
+  "Super nervioso estaba este día y tu tan LINDA como todos los días💖✨\ . 🌻💛"
 ];
 
 function openModal(src,alt,index=0){

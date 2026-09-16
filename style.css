@@ -66,14 +66,12 @@ p{line-height:1.75}
 .memory-flower{position:absolute;z-index:3;width:220px;height:220px;opacity:.98}
 .flower-left{left:2%;bottom:8%;transform:rotate(-20deg)}
 .flower-right{right:2%;top:8%;transform:rotate(25deg)}
-.memory-controls{display:grid;grid-template-columns:52px minmax(0,1fr) 52px;align-items:center;gap:12px;width:min(100%,560px);margin:10px auto 25px;padding:0 10px;box-sizing:border-box}
-.icon-btn{width:48px;height:48px;min-width:48px;border-radius:50%;background:#f0ead6;color:var(--dark);position:relative;z-index:20;flex-shrink:0;cursor:pointer}
-.icon-btn:active{transform:scale(.95)}
+.memory-controls{display:flex;align-items:center;justify-content:center;gap:22px;margin:10px 0 25px}
+.icon-btn{width:42px;height:42px;border-radius:50%;background:#f0ead6;color:var(--dark)}
 .icon-btn:hover{transform:scale(1.08)}
-.progress-dots{display:flex;align-items:center;justify-content:center;gap:8px;min-width:0;width:100%;overflow:hidden;padding:8px 2px;box-sizing:border-box}
-.progress-dots .dot{flex:0 0 auto}
-.dot{width:8px;height:8px;border-radius:50%;background:#d5ceb9;transition:.25s}
-.dot.active{width:10px;height:10px;border-radius:50%;background:var(--gold)}
+.progress-dots{display:flex;gap:7px}
+.dot{width:7px;height:7px;border-radius:50%;background:#d5ceb9;transition:.25s}
+.dot.active{width:24px;border-radius:10px;background:var(--gold)}
 .music{background:#f5f1df}
 .music-card{max-width:1000px;margin:auto;padding:45px;border-radius:35px;background:rgba(255,255,255,.7);box-shadow:var(--shadow);display:grid;grid-template-columns:auto 1fr;gap:25px;align-items:center}
 .music-flower{font-size:4rem}
@@ -124,9 +122,6 @@ p{line-height:1.75}
  .bouquet-card{min-height:470px}
  .memory-frame{min-height:500px}
  .memory-photo-wrap{width:min(78vw,360px)}
- .memory-controls{grid-template-columns:50px minmax(0,1fr) 50px;gap:8px;width:100%;padding:0 2px;margin-top:14px}
- .memory-controls .icon-btn{width:50px;height:50px;min-width:50px;font-size:1.15rem}
- .progress-dots{max-width:100%;gap:8px}
  .flower-left{left:-12%;bottom:5%}.flower-right{right:-12%;top:5%}
  .music-card{padding:30px 20px}
 }
