@@ -166,24 +166,60 @@ function photoExistsFallback(img){
   else fallback.style.display="none";
 }
 
+let photoTransitionToken=0;
+
 function showPhoto(index, animate=true){
   current=(index+photos.length)%photos.length;
   const img=document.getElementById("currentPhoto");
   const fallback=document.getElementById("photoFallback");
-  if(animate) img.classList.add("fade-out");
-  setTimeout(()=>{
-    img.src=photos[current];
-    img.alt=photoNames[current];
+  const targetSrc=photos[current];
+  const targetAlt=photoNames[current] || "Recuerdo";
+  const token=++photoTransitionToken;
+
+  img.onerror=()=>{ if(token===photoTransitionToken) fallback.style.display="grid"; };
+  img.onload=()=>{ if(token===photoTransitionToken) fallback.style.display="none"; };
+
+  // Pre-cargamos la siguiente foto antes de cambiar la visible.
+  // Así evitamos que durante el desvanecido vuelva a verse la foto anterior.
+  const preload=new Image();
+  preload.onload=()=>{
+    if(token!==photoTransitionToken) return;
+    if(animate){
+      img.classList.add("fade-out");
+      setTimeout(()=>{
+        if(token!==photoTransitionToken) return;
+        img.src=targetSrc;
+        img.alt=targetAlt;
+        updateDots();
+        requestAnimationFrame(()=>requestAnimationFrame(()=>{
+          if(token===photoTransitionToken) img.classList.remove("fade-out");
+        }));
+      },320);
+    }else{
+      img.src=targetSrc;
+      img.alt=targetAlt;
+      updateDots();
+    }
+  };
+  preload.onerror=()=>{
+    if(token!==photoTransitionToken) return;
+    img.src=targetSrc;
+    img.alt=targetAlt;
     updateDots();
-    if(animate) setTimeout(()=>img.classList.remove("fade-out"),80);
-  },animate?300:0);
-  img.onerror=()=>{fallback.style.display="grid"};
-  img.onload=()=>{fallback.style.display="none"};
+    img.classList.remove("fade-out");
+  };
+  preload.src=targetSrc;
+  updateDots();
 }
 
 function updateDots(){
   const d=document.getElementById("progressDots");
-  d.innerHTML=photos.map((_,i)=>`<span class="dot ${i===current?"active":""}"></span>`).join("");
+  if(!d) return;
+  // Solo mostramos tres puntos. El punto activo avanza con cada foto.
+  const active=current%3;
+  d.innerHTML=Array.from({length:3},(_,i)=>
+    `<span class="dot ${i===active?"active":""}" aria-hidden="true"></span>`
+  ).join("");
 }
 function toggleSlideshow(){
   const btn=document.getElementById("playSlideshow");
